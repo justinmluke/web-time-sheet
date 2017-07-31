@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Web Time Sheet</title>
+</head>
+<body>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<h1> Thank you for using the Web Time Sheet </h1>
+
+<table th:object="${shift}">
+    <tr>
+        <th>Date</th>
+        <td th:text="*{date}"></td>
+    </tr>
+    <tr>
+        <th>Clocked In</th>
+        <td th:text="*{clockedIn}"></td>
+    </tr>
+    <tr>
+        <th>Clocked Out</th>
+        <td th:text="*{clockedOut}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
