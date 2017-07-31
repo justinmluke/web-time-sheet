@@ -15,7 +15,6 @@ public class Shift {
     private LocalDate date = LocalDateTime.now().toLocalDate();
 
     @NotNull
-    @Pattern(regexp = "[]")
     private String clockedIn;
 
     @NotNull
