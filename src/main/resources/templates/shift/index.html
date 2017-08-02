@@ -20,6 +20,7 @@
         <td th:text="${shift.date}"></td>
         <td th:text="${shift.clockedIn}"></td>
         <td th:text="${shift.clockedOut}"></td>
+        <input type="hidden" th:value="${shift.shiftId}"/>
     </tr>
 </table>
 

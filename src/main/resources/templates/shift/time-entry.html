@@ -19,6 +19,7 @@
         <input th:field="*{clockedOut}"/></label>
         <input type="radio" name="time_of_out" value="AM" th:field="*{clockedOut}"/>AM
         <input type="radio" name="time_of_out" value="PM" th:field="*{clockedOut}"/>PM<br/>
+        <input type="hidden" value="*{shiftId}"/>
         <input type="submit" value="Submit"/>
     </form>
 </body>
