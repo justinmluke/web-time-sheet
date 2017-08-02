@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.validation.Valid;
-import java.util.Calendar;
 
 /**
  * Created by there on 7/15/2017.
@@ -26,15 +25,21 @@ public class ShiftController {
     }
 
     @RequestMapping(value = "time-entry", method = RequestMethod.GET)
-    public String clockIn(Model model) {
+    public String timeEntry(Model model) {
         model.addAttribute(new Shift());
         return "shift/time-entry";
     }
 
     @RequestMapping(value = "time-entry", method = RequestMethod.POST)
-    public String clockIn(Model model, @ModelAttribute @Valid Shift shift) {
+    public String timeEntry(Model model, @ModelAttribute @Valid Shift shift) {
         ShiftData.add(shift);
         return "shift/confirmation";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.GET)
+    public String remove(Model model) {
+        model.addAttribute("shifts", ShiftData.getAll());
+        return "shift/remove";
     }
 
 }

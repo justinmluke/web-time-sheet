@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+<nav th:replace="fragments :: navigation"></nav>
+<form>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Clocked In</th>
+            <th>Clocked Out</th>
+        </tr>
+        <tr th:each="shift : ${shifts}">
+            <td th:text="${shift.date}"></td>
+            <td th:text="${shift.clockedIn}"></td>
+            <td th:text="${shift.clockedOut}"></td>
+            <input type="hidden" th:value="${shift.shiftId}"/>
+        </tr>
+        <input type="checkbox" name="shiftIds" th:value="${shift.shiftId}" th:id="${shift.shiftId}"/>
+        <input type="submit" value="Remove"/>
+    </table>
+</form>
+</body>
+</html>
