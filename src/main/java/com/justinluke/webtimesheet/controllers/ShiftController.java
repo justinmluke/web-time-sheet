@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -25,21 +26,28 @@ public class ShiftController {
     }
 
     @RequestMapping(value = "time-entry", method = RequestMethod.GET)
-    public String timeEntry(Model model) {
+    public String displayTimeEntry(Model model) {
         model.addAttribute(new Shift());
         return "shift/time-entry";
     }
 
     @RequestMapping(value = "time-entry", method = RequestMethod.POST)
-    public String timeEntry(Model model, @ModelAttribute @Valid Shift shift) {
+    public String processTimeEntry(Model model, @ModelAttribute @Valid Shift shift) {
         ShiftData.add(shift);
         return "shift/confirmation";
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public String remove(Model model) {
+    public String displayRemoveForm(Model model) {
         model.addAttribute("shifts", ShiftData.getAll());
         return "shift/remove";
     }
 
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String processRemoveForm(@RequestParam int[] shiftIds) {
+        for (int shiftId : shiftIds) {
+            ShiftData.remove(shiftId);
+        }
+        return "redirect:";
+    }
 }
