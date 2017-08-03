@@ -2,12 +2,10 @@ package com.justinluke.webtimesheet.controllers;
 
 import com.justinluke.webtimesheet.models.Shift;
 import com.justinluke.webtimesheet.models.ShiftData;
+import javafx.scene.shape.Path;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -50,4 +48,21 @@ public class ShiftController {
         }
         return "redirect:";
     }
+
+    @RequestMapping(value = "edit/{shiftId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int shiftId) {
+        Shift theShift = ShiftData.getById(shiftId);
+        model.addAttribute("shift", theShift);
+        return "shift/edit";
+    }
+
+    @RequestMapping(value = "edit/{shiftId}", method = RequestMethod.POST)
+    public String processEditForm(@PathVariable int shiftId, String clockedIn, String clockedOut) {
+        Shift theShift = ShiftData.getById(shiftId);
+        theShift.setClockedIn(clockedIn);
+        theShift.setClockedOut(clockedOut);
+        return "redirect:/shift/";
+
+    }
+
 }

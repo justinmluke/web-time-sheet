@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit Time Sheet</title>
+</head>
+<body>
+    <form th:object="${shift}" method="post">
+        <label th:for="*{clockedIn}">Clocked In:
+        <input th:field="*{clockedIn}" th:value="*{clockedIn}"/></label>
+            <input type="radio" name="time_of_in" value="AM"/>AM
+            <input type="radio" name="time_of_in" value="PM"/>PM<br/>
+        <label th:for="*{clockedOut}">Clocked Out:
+        <input th:field="*{clockedOut}" th:value="*{clockedOut}"/></label>
+            <input type="radio" name="time_of_out" value="AM"/>AM
+            <input type="radio" name="time_of_out" value="PM"/>PM<br/>
+        <input type="hidden" th:value="*{shiftId}" name="shiftId"/>
+        <input type="submit" value="Submit Changes"/>
+    </form>
+</body>
+</html>
