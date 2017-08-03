@@ -29,7 +29,7 @@ public class ShiftData {
 
         for (Shift candidateShift : shifts) {
             if (candidateShift.getShiftId() == id) {
-                candidateShift = theShift;
+                theShift = candidateShift;
             }
         }
         return theShift;
