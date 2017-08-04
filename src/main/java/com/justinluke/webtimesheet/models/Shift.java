@@ -19,6 +19,9 @@ public class Shift {
     @NotNull
     private String clockedOut;
 
+    @NotNull
+    private Company company;
+
     private int shiftId;
     private static int nextId = 1;
 
@@ -58,11 +61,12 @@ public class Shift {
         this.date = date;
     }
 
-    public Shift(LocalDate date, String clockedIn, String clockedOut) {
+    public Shift(LocalDate date, String clockedIn, String clockedOut, Company company) {
         this();
         this.date = date;
         this.clockedIn = clockedIn;
         this.clockedOut = clockedOut;
+        this.company = company;
     }
 
     public Shift() {
