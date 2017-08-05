@@ -1,11 +1,17 @@
 package com.justinluke.webtimesheet.models;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Created by there on 8/3/2017.
  */
 public class Company {
 
+    @NotNull
+    @Size(min = 3, max = 55, message = "Please enter a valid name")
     private String name;
+
     private int companyId;
     private static int nextId = 1;
 
