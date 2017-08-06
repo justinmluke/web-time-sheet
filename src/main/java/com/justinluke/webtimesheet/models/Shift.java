@@ -19,7 +19,6 @@ public class Shift {
     @NotNull
     private String clockedOut;
 
-    @NotNull
     private Company company;
 
     private int shiftId;
@@ -55,6 +54,14 @@ public class Shift {
 
     public void setShiftId(int shiftId) {
         this.shiftId = shiftId;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public Shift(LocalDate date) {

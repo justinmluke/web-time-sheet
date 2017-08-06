@@ -1,8 +1,9 @@
 package com.justinluke.webtimesheet.controllers;
 
+import com.justinluke.webtimesheet.models.Company;
+import com.justinluke.webtimesheet.models.CompanyData;
 import com.justinluke.webtimesheet.models.Shift;
 import com.justinluke.webtimesheet.models.ShiftData;
-import javafx.scene.shape.Path;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +27,14 @@ public class ShiftController {
     @RequestMapping(value = "time-entry", method = RequestMethod.GET)
     public String displayTimeEntry(Model model) {
         model.addAttribute(new Shift());
+        model.addAttribute("companies", CompanyData.getAll());
         return "shift/time-entry";
     }
 
     @RequestMapping(value = "time-entry", method = RequestMethod.POST)
-    public String processTimeEntry(Model model, @ModelAttribute @Valid Shift shift) {
+    public String processTimeEntry(Model model, @ModelAttribute @Valid Shift shift, int companyId) {
+        Company comp = CompanyData.getById(companyId);
+        shift.setCompany(comp);
         ShiftData.add(shift);
         return "shift/confirmation";
     }

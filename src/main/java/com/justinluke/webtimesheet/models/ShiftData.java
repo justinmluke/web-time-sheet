@@ -34,7 +34,17 @@ public class ShiftData {
         }
         return theShift;
     }
-}
 
-// TODO #1 - Add find by company method to ShiftData
+    public static List<Shift> getByCompany (Company company) {
+        List<Shift> shiftsByCompany = new ArrayList<>();
+
+        for (Shift candidateShift : shifts) {
+            if (candidateShift.getCompany() == company) {
+                shiftsByCompany.add(candidateShift);
+            }
+        }
+        return shiftsByCompany;
+    }
+
+}
 

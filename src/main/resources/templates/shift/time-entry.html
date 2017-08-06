@@ -16,9 +16,16 @@
             <input type="radio" name="time_of_in" value="AM"/>AM
             <input type="radio" name="time_of_in" value="PM"/>PM<br/>
         <label th:for="*{clockedOut}">Clocked Out:
-        <input th:field="*{clockedOut}"/></label>
-        <input type="radio" name="time_of_out" value="AM"/>AM
-        <input type="radio" name="time_of_out" value="PM"/>PM<br/>
+            <input th:field="*{clockedOut}"/></label>
+            <input type="radio" name="time_of_out" value="AM"/>AM
+            <input type="radio" name="time_of_out" value="PM"/>PM<br/>
+        <label th:for="company">Company
+        <select name="companyId">
+            <option th:each="company : ${companies}"
+                    th:text="${company.name}"
+                    th:value="${company.companyId}">
+            </option>
+        </select></label>
         <input type="submit" value="Submit"/>
     </form>
 </body>

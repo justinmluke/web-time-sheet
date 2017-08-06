@@ -2,6 +2,8 @@ package com.justinluke.webtimesheet.models;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by there on 8/3/2017.
@@ -11,6 +13,8 @@ public class Company {
     @NotNull
     @Size(min = 3, max = 55, message = "Please enter a valid name")
     private String name;
+
+    private static List<Shift> shifts = new ArrayList<>();
 
     private int companyId;
     private static int nextId = 1;
