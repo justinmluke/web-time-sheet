@@ -31,6 +31,14 @@ public class Company {
         return companyId;
     }
 
+    public List<Shift> getShifts() {
+        return shifts;
+    }
+
+    public void addShift(Shift shift) {
+        shifts.add(shift);
+    }
+
     public Company() {
         companyId = nextId;
         nextId++;
