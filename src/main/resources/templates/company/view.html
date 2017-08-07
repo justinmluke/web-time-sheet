@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<h1 th:text="${company.name}"></h1>
+
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Clocked In</th>
+        <th>Clocked Out</th>
+    </tr>
+    <tr th:each="shift : ${company.shifts}">
+        <td th:text="${shift.date}"></td>
+        <td th:text="${shift.clockedIn}"></td>
+        <td th:text="${shift.clockedOut}"></td>
+    </tr>
+</table>
+
+</body>
+</html>

@@ -36,7 +36,7 @@ public class Company {
     }
 
     public void addShift(Shift shift) {
-        shifts.add(shift);
+        this.shifts.add(shift);
     }
 
     public Company() {
@@ -45,6 +45,7 @@ public class Company {
     }
 
     public Company(String name) {
+        this();
         this.name = name;
     }
 }

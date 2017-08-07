@@ -11,7 +11,7 @@
 <p th:unless="${companies} and ${companies.size()}">No Employers Yet</p>
 
 <ul th:each="company : ${companies}">
-    <li th:text="${company.name}"></li>
+    <a th:href="'/company/view/' + ${company.companyId}"><li th:text="${company.name}"></li></a>
 </ul>
 
 <nav>
