@@ -19,7 +19,8 @@ public class CompanyData {
     }
 
     public static void remove(int id) {
-
+        Company companyToRemove = getById(id);
+        companies.remove(companyToRemove);
     }
 
     public static Company getById(int id) {
@@ -31,4 +32,5 @@ public class CompanyData {
         }
         return theCompany;
     }
+
 }

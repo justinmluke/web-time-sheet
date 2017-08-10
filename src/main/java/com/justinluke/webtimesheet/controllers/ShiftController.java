@@ -41,20 +41,6 @@ public class ShiftController {
         return "shift/confirmation";
     }
 
-    @RequestMapping(value = "remove", method = RequestMethod.GET)
-    public String displayRemoveForm(Model model) {
-        model.addAttribute("shifts", ShiftData.getAll());
-        return "shift/remove";
-    }
-
-    @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveForm(@RequestParam int[] shiftIds) {
-        for (int shiftId : shiftIds) {
-            ShiftData.remove(shiftId);
-        }
-        return "redirect:";
-    }
-
     @RequestMapping(value = "edit/{shiftId}", method = RequestMethod.GET)
     public String displayEditForm(Model model, @PathVariable int shiftId) {
         Shift theShift = ShiftData.getById(shiftId);

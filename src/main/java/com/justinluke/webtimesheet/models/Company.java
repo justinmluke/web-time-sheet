@@ -14,7 +14,7 @@ public class Company {
     @Size(min = 3, max = 55, message = "Please enter a valid name")
     private String name;
 
-    private static List<Shift> shifts = new ArrayList<>();
+    private List<Shift> shifts = new ArrayList<>();
 
     private int companyId;
     private static int nextId = 1;
@@ -37,6 +37,14 @@ public class Company {
 
     public void addShift(Shift shift) {
         this.shifts.add(shift);
+    }
+
+    public void removeShift (int shiftId) {
+        for (Shift shift : this.shifts) {
+            if (shift.getShiftId() == shiftId) {
+                this.shifts.remove(shift);
+            }
+        }
     }
 
     public Company() {

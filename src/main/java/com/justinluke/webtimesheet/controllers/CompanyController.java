@@ -5,10 +5,7 @@ import com.justinluke.webtimesheet.models.CompanyData;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.jws.WebParam;
 import javax.validation.Valid;
@@ -48,5 +45,21 @@ public class CompanyController {
     Company comp = CompanyData.getById(companyId);
     model.addAttribute("company", comp);
         return "company/view";
+    }
+
+    @RequestMapping(value = "remove/{companyId}", method = RequestMethod.GET)
+    public String displayRemoveShiftForm(Model model, @PathVariable int companyId) {
+        model.addAttribute("company", CompanyData.getById(companyId));
+        return "shift/remove";
+    }
+
+    @RequestMapping(value = "remove/{companyId}", method = RequestMethod.POST)
+    public String processRemoveShiftForm(@RequestParam int[] shiftIds, @PathVariable int companyId) {
+        Company comp = CompanyData.getById(companyId);
+        for (int shiftId : shiftIds) {
+            comp.removeShift(shiftId);
+
+        }
+        return "redirect:";
     }
 }

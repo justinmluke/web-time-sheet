@@ -7,9 +7,10 @@
 <body>
 
 <nav th:replace="fragments :: navigation"></nav>
+<h1 th:text="${company.name}"></h1>
 <form method="post">
 
-    <div th:each="shift : ${shifts}" class="checkbox">
+    <div th:each="shift : ${company.shifts}" class="checkbox">
         <input type="checkbox" name="shiftIds" th:value="${shift.shiftId}" th:id="${shift.shiftId}"/>
         <label th:for="${shift.shiftId}" th:text="${shift.date}"></label>
         <br />
