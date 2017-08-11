@@ -50,7 +50,7 @@ public class CompanyController {
     @RequestMapping(value = "remove/{companyId}", method = RequestMethod.GET)
     public String displayRemoveShiftForm(Model model, @PathVariable int companyId) {
         model.addAttribute("company", CompanyData.getById(companyId));
-        return "shift/remove";
+        return "company/remove";
     }
 
     @RequestMapping(value = "remove/{companyId}", method = RequestMethod.POST)
@@ -60,6 +60,6 @@ public class CompanyController {
             comp.removeShift(shiftId);
 
         }
-        return "redirect:";
+        return "redirect:/company/view/" + companyId;
     }
 }
