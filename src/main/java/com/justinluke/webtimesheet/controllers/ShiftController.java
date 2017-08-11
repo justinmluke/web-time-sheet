@@ -41,20 +41,4 @@ public class ShiftController {
         return "shift/confirmation";
     }
 
-    @RequestMapping(value = "edit/{shiftId}", method = RequestMethod.GET)
-    public String displayEditForm(Model model, @PathVariable int shiftId) {
-        Shift theShift = ShiftData.getById(shiftId);
-        model.addAttribute("shift", theShift);
-        return "shift/edit";
-    }
-
-    @RequestMapping(value = "edit/{shiftId}", method = RequestMethod.POST)
-    public String processEditForm(@PathVariable int shiftId, String clockedIn, String clockedOut) {
-        Shift theShift = ShiftData.getById(shiftId);
-        theShift.setClockedIn(clockedIn);
-        theShift.setClockedOut(clockedOut);
-        return "redirect:/shift/";
-
-    }
-
 }
