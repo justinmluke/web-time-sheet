@@ -14,7 +14,7 @@ public abstract class User {
     private String email;
 
     @NotNull(message = "Please enter a valid password")
-    @Size(min = 6, max = 24, message = "Password must be between than 6 characters")
+    @Size(min = 6, max = 24, message = "Password must be between 6 and 24 characters")
     private String password;
 
     @NotNull(message = "Passwords do not match")
