@@ -19,12 +19,6 @@ import java.util.Locale;
 @RequestMapping(value = "company")
 public class CompanyController {
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String index(Model model) {
-        model.addAttribute("companies", CompanyData.getAll());
-        return "company/index";
-    }
-
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new Company());

@@ -2,9 +2,40 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8"/>
-    <title></title>
+    <title>Register</title>
 </head>
 <body>
 
+<h1>Employee Sign Up</h1>
+
+<form th:object="${employee}" method="post">
+    <div>
+        <label th:for="firstName">First Name</label>
+        <input th:field="*{firstName}"/>
+        <span th:errors="*{firstName}"></span>
+    </div>
+    <div>
+        <label th:for="lastName">Last Name</label>
+        <input th:field="*{lastName}"/>
+        <span th:errors="*{lastName}"></span>
+    </div>
+    <div>
+        <label th:for="email">Email</label>
+        <input th:field="*{email}" type="email"/>
+        <span th:errors="*{email}"></span>
+    </div>
+    <div>
+        <label th:for="password">Password</label>
+        <input th:field="*{password}" type="password"/>
+        <span th:errors="*{password}"></span>
+    </div>
+    <div>
+        <label th:for="verifyPassword">Verify Password</label>
+        <input th:field="*{verifyPassword}" type="password"/>
+        <span th:errors="*{verifyPassword}"></span>
+    </div>
+
+    <input type="submit" value="Register"/>
+</form>
 </body>
 </html>
