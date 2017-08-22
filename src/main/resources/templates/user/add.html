@@ -10,16 +10,6 @@
 
 <form th:object="${employee}" method="post">
     <div>
-        <label th:for="firstName">First Name</label>
-        <input th:field="*{firstName}"/>
-        <span th:errors="*{firstName}"></span>
-    </div>
-    <div>
-        <label th:for="lastName">Last Name</label>
-        <input th:field="*{lastName}"/>
-        <span th:errors="*{lastName}"></span>
-    </div>
-    <div>
         <label th:for="email">Email</label>
         <input th:field="*{email}" type="email"/>
         <span th:errors="*{email}"></span>

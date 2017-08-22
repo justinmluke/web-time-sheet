@@ -1,69 +1,47 @@
 package com.justinluke.webtimesheet.models;
 
 import org.hibernate.validator.constraints.Email;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by there on 8/14/2017.
  */
-public abstract class User {
+public class User extends AbstractEntity{
 
     @Email(message = "Please enter a valid email")
     private String email;
 
-    @NotNull(message = "Please enter a valid password")
-    @Size(min = 6, max = 24, message = "Password must be between 6 and 24 characters")
-    private String password;
+    @NotNull
+    private String pwHash;
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @NotNull(message = "Passwords do not match")
     private String verifyPassword;
+
+    @ManyToMany
+    private List<Company> companies = new ArrayList<>();
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-        checkPassword(password);
-    }
-
-    public String getVerifyPassword() {
-        return verifyPassword;
-    }
-
-    public void setVerifyPassword(String verifyPassword) {
-        this.verifyPassword = verifyPassword;
-        checkPassword(password);
-    }
-
     public User() {}
 
-    public User(String email, String password, String verifyPassword) {
+    public User(String email, String password) {
         this.email = email;
-        this.password = password;
-        this.verifyPassword = verifyPassword;
+        this.pwHash = hashPassword(password);
     }
 
-    public boolean checkPassword(String password) {
-        if (password != null &&
-                verifyPassword != null){
-            if (!password.equals(verifyPassword)){
-                setVerifyPassword(null);
-            }
-        } else {
-            return true;
-        }
-        return false;
+    private static String hashPassword(String password) {
+        return encoder.encode(password);
     }
 
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, pwHash);
+    }
 }

@@ -24,6 +24,9 @@ public class Company {
     @GeneratedValue
     private int id;
 
+    @ManyToMany(mappedBy = "companies")
+    private List<User> users;
+
     public String getName() {
         return name;
     }
