@@ -1,15 +1,14 @@
 package com.justinluke.webtimesheet.controllers;
 
 import com.justinluke.webtimesheet.models.Company;
-import com.justinluke.webtimesheet.models.CompanyData;
+import com.justinluke.webtimesheet.models.data.CompanyDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.WebParam;
 import javax.validation.Valid;
-import java.util.Locale;
 
 
 /**
@@ -18,6 +17,15 @@ import java.util.Locale;
 @Controller
 @RequestMapping(value = "company")
 public class CompanyController {
+
+    @Autowired
+    private CompanyDao companyDao;
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String index(Model model) {
+        model.addAttribute("companies", companyDao.findAll());
+        return "company/index";
+    }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
@@ -30,26 +38,26 @@ public class CompanyController {
         if (errors.hasErrors()){
             return "company/add";
         }
-        CompanyData.add(company);
+        companyDao.save(company);
         return "redirect:/company/";
     }
 
     @RequestMapping(value = "view/{companyId}", method = RequestMethod.GET)
     public String viewCompany(Model model, @PathVariable int companyId){
-    Company comp = CompanyData.getById(companyId);
+    Company comp = companyDao.findOne(companyId);
     model.addAttribute("company", comp);
         return "company/view";
     }
 
     @RequestMapping(value = "remove/{companyId}", method = RequestMethod.GET)
     public String displayRemoveShiftForm(Model model, @PathVariable int companyId) {
-        model.addAttribute("company", CompanyData.getById(companyId));
+        model.addAttribute("company", companyDao.findOne(companyId));
         return "company/remove";
     }
 
     @RequestMapping(value = "remove/{companyId}", method = RequestMethod.POST)
     public String processRemoveShiftForm(@RequestParam int[] shiftIds, @PathVariable int companyId) {
-        Company comp = CompanyData.getById(companyId);
+        Company comp = companyDao.findOne(companyId);
         for (int shiftId : shiftIds) {
             comp.removeShift(shiftId);
 

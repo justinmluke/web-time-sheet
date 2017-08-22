@@ -1,7 +1,8 @@
 package com.justinluke.webtimesheet.controllers;
 
-import com.justinluke.webtimesheet.models.CompanyData;
 import com.justinluke.webtimesheet.models.Employee;
+import com.justinluke.webtimesheet.models.data.CompanyDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,9 +20,12 @@ import javax.validation.Valid;
 @RequestMapping(value = "")
 public class EmployeeController {
 
+    @Autowired
+    private CompanyDao companyDao;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model) {
-        model.addAttribute("companies", CompanyData.getAll());
+        model.addAttribute("companies", companyDao.findAll());
         return "employee/index";
     }
 

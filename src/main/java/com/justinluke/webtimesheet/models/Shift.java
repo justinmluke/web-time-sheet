@@ -2,12 +2,20 @@ package com.justinluke.webtimesheet.models;
 
 
 
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 /**
  * Created by there on 7/15/2017.
  */
+@Entity
 public class Shift {
 
     @NotNull
@@ -19,10 +27,12 @@ public class Shift {
     @NotNull
     private String clockedOut;
 
+    @ManyToOne
     private Company company;
 
-    private int shiftId;
-    private static int nextId = 1;
+    @Id
+    @GeneratedValue
+    private int id;
 
     public LocalDate getDate() {
         return date;
@@ -48,12 +58,8 @@ public class Shift {
         this.clockedOut = clockedOut;
     }
 
-    public int getShiftId() {
-        return shiftId;
-    }
-
-    public void setShiftId(int shiftId) {
-        this.shiftId = shiftId;
+    public int getId() {
+        return id;
     }
 
     public Company getCompany() {
@@ -69,17 +75,13 @@ public class Shift {
     }
 
     public Shift(LocalDate date, String clockedIn, String clockedOut, Company company) {
-        this();
         this.date = date;
         this.clockedIn = clockedIn;
         this.clockedOut = clockedOut;
         this.company = company;
     }
 
-    public Shift() {
-        shiftId = nextId;
-        nextId++;
-    }
+    public Shift() {}
 }
 
 

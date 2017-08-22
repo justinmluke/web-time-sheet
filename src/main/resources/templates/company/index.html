@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>My Employers</title>
+</head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+<h1>My Employers</h1>
+
+<p th:unless="${companies} and ${companies.size()}">No Employers Yet</p>
+
+<ul th:each="company : ${companies}">
+    <a th:href="'/company/view/' + ${company.id}"><li th:text="${company.name}"></li></a>
+</ul>
+
+<nav>
+    <a href="/company/add">Add</a>
+</nav>
+</body>
+</html>

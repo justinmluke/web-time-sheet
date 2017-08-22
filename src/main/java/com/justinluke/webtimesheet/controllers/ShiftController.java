@@ -1,9 +1,10 @@
 package com.justinluke.webtimesheet.controllers;
 
 import com.justinluke.webtimesheet.models.Company;
-import com.justinluke.webtimesheet.models.CompanyData;
 import com.justinluke.webtimesheet.models.Shift;
-import com.justinluke.webtimesheet.models.ShiftData;
+import com.justinluke.webtimesheet.models.data.CompanyDao;
+import com.justinluke.webtimesheet.models.data.ShiftDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,25 +20,25 @@ import javax.validation.Valid;
 @RequestMapping(value = "shift")
 public class ShiftController {
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String index(Model model) {
-        model.addAttribute("companies", CompanyData.getAll());
-        return "shift/index";
-    }
+    @Autowired
+    private CompanyDao companyDao;
+
+    @Autowired
+    private ShiftDao shiftDao;
 
     @RequestMapping(value = "time-entry", method = RequestMethod.GET)
     public String displayTimeEntry(Model model) {
         model.addAttribute(new Shift());
-        model.addAttribute("companies", CompanyData.getAll());
+        model.addAttribute("companies", companyDao.findAll());
         return "shift/time-entry";
     }
 
     @RequestMapping(value = "time-entry", method = RequestMethod.POST)
-    public String processTimeEntry(Model model, @ModelAttribute @Valid Shift shift, Errors errors, int companyId) {
-        Company comp = CompanyData.getById(companyId);
+    public String processTimeEntry(Model model, @ModelAttribute @Valid Shift shift, Errors errors, @RequestParam int companyId) {
+        Company comp = companyDao.findOne(companyId);
         shift.setCompany(comp);
         comp.addShift(shift);
-        ShiftData.add(shift);
+        shiftDao.save(shift);
         return "shift/confirmation";
     }
 

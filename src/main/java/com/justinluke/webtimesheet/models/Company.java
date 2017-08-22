@@ -1,5 +1,6 @@
 package com.justinluke.webtimesheet.models;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -8,16 +9,20 @@ import java.util.List;
 /**
  * Created by there on 8/3/2017.
  */
+@Entity
 public class Company {
 
     @NotNull
     @Size(min = 3, max = 55, message = "Please enter a valid name")
     private String name;
 
+    @OneToMany
+    @JoinColumn(name = "company_id")
     private List<Shift> shifts = new ArrayList<>();
 
-    private int companyId;
-    private static int nextId = 1;
+    @Id
+    @GeneratedValue
+    private int id;
 
     public String getName() {
         return name;
@@ -27,8 +32,8 @@ public class Company {
         this.name = name;
     }
 
-    public int getCompanyId() {
-        return companyId;
+    public int getId() {
+        return id;
     }
 
     public List<Shift> getShifts() {
@@ -41,19 +46,14 @@ public class Company {
 
     public void removeShift (int shiftId) {
         for (Shift shift : this.shifts) {
-            if (shift.getShiftId() == shiftId) {
+            if (shift.getId() == shiftId) {
                 this.shifts.remove(shift);
             }
         }
     }
-
-    public Company() {
-        companyId = nextId;
-        nextId++;
-    }
+    public Company() {}
 
     public Company(String name) {
-        this();
         this.name = name;
     }
 }

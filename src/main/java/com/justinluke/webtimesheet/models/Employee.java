@@ -1,5 +1,8 @@
 package com.justinluke.webtimesheet.models;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +20,9 @@ public class Employee extends User {
 
     private List<Company> companies = new ArrayList<>();
 
-    private int employeeId;
-    private static int nextId;
+    @Id
+    @GeneratedValue
+    private int id;
 
     public String getFirstName() {
         return firstName;
@@ -45,17 +49,10 @@ public class Employee extends User {
     }
 
     public int getEmployeeId() {
-        return employeeId;
+        return id;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public Employee() {
-        employeeId = nextId;
-        nextId++;
-    }
+    public Employee() {}
 
     public Employee(String email, String password, String verifyPassword, String firstName, String lastName) {
         super(email, password, verifyPassword);

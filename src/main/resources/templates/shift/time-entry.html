@@ -23,7 +23,7 @@
         <select name="companyId">
             <option th:each="company : ${companies}"
                     th:text="${company.name}"
-                    th:value="${company.companyId}">
+                    th:value="${company.id}">
             </option>
         </select></label>
         <input type="submit" value="Submit"/>
