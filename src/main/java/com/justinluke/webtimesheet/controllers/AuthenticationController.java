@@ -1,8 +1,10 @@
 package com.justinluke.webtimesheet.controllers;
 
 import com.justinluke.webtimesheet.models.User;
+import com.justinluke.webtimesheet.models.data.UserDao;
 import com.justinluke.webtimesheet.models.forms.LoginForm;
 import com.justinluke.webtimesheet.models.forms.RegisterForm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -19,12 +21,16 @@ import javax.validation.Valid;
 @Controller
 public class AuthenticationController extends AbstractController{
 
+    @Autowired
+    private UserDao userDao;
+
     @RequestMapping(value = "")
-    public String index() {
+    public String index(Model model){
+        model.addAttribute("companies", userDao.findOne();
         return "user/index";
     }
 
-    @RequestMapping(value = "/register")
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String registerForm(Model model) {
         model.addAttribute(new RegisterForm());
         return "user/register";

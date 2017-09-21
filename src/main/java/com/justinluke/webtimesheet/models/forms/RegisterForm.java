@@ -16,6 +16,8 @@ public class RegisterForm extends LoginForm {
         checkPasswordForRegistration();
     }
 
+    public String getVerifyPassword() {return verifyPassword;}
+
     public void setVerifyPassword(String verifyPassword) {
         this.verifyPassword = verifyPassword;
         checkPasswordForRegistration();

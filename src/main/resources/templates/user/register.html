@@ -6,21 +6,26 @@
 </head>
 <body>
 
-<nav th:replace="fragments :: navigation"></nav>
+<h1>Register</h1>
 
-<table th:each="company : ${companies}">
-    <h1 th:text="${company.name}"></h1>
-    <tr>
-        <th>Date</th>
-        <th>Clocked In</th>
-        <th>Clocked Out</th>
-    </tr>
-    <tr th:each="shift : ${company.shifts}">
-        <td th:text="${shift.date}"></td>
-        <td th:text="${shift.clockedIn}"></td>
-        <td th:text="${shift.clockedOut}"></td>
-        <input type="hidden" th:value="${shift.id}"/>
-    </tr>
-</table>
+<form th:object="${registerForm}" method="post">
+    <div>
+        <label th:for="email">Email</label>
+        <input th:field="*{email}" type="email"/>
+        <span th:errors="*{email}"></span>
+    </div>
+    <div>
+        <label th:for="password">Password</label>
+        <input th:field="*{password}" type="password"/>
+        <span th:errors="*{password}"></span>
+    </div>
+    <div>
+        <label th:for="verifyPassword">Verify Password</label>
+        <input th:field="*{verifyPassword}" type="password"/>
+        <span th:errors="*{verifyPassword}"></span>
+    </div>
+
+    <input type="submit" value="Register"/>
+</form>
 </body>
 </html>

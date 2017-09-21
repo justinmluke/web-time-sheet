@@ -21,12 +21,6 @@ public class CompanyController {
     @Autowired
     private CompanyDao companyDao;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String index(Model model) {
-        model.addAttribute("companies", companyDao.findAll());
-        return "company/index";
-    }
-
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new Company());
