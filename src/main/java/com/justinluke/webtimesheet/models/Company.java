@@ -25,7 +25,7 @@ public class Company {
     private int id;
 
     @ManyToMany(mappedBy = "companies")
-    private List<User> users;
+    private List<User> user;
 
     public String getName() {
         return name;

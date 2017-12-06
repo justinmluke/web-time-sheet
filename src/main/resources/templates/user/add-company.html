@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add Company</title>
+</head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="POST" th:object="${form}">
+    <div class="form-group">
+        <label th:for="companyId"></label>
+        <select name="companyId">
+            <option th:field="*{companyId}" th:each="company : *{companies}"
+                    th:value="${company.id}"
+                    th:text="${company.name}">
+            </option>
+        </select>
+        <input type="hidden" name="userId" th:value="*{user.uid}" />
+        <span th:errors="*{companyId}"></span>
+    </div>
+    <input type="submit" value="Add Company"/>
+</form>
+
+</body>
+</html>

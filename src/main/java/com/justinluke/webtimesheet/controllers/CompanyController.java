@@ -2,6 +2,7 @@ package com.justinluke.webtimesheet.controllers;
 
 import com.justinluke.webtimesheet.models.Company;
 import com.justinluke.webtimesheet.models.data.CompanyDao;
+import com.justinluke.webtimesheet.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ public class CompanyController {
     @Autowired
     private CompanyDao companyDao;
 
+    @Autowired
+    private UserDao userDao;
+
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new Company());
@@ -33,6 +37,7 @@ public class CompanyController {
             return "company/add";
         }
         companyDao.save(company);
+
         return "redirect:/company/";
     }
 
@@ -41,6 +46,10 @@ public class CompanyController {
     Company comp = companyDao.findOne(companyId);
     model.addAttribute("company", comp);
         return "company/view";
+    }
+    @RequestMapping(value = "add-shift/{userId}/{companyId}", method = RequestMethod.GET)
+    public String addShift(Model model, @PathVariable int userId, @PathVariable int companyId)    {
+        return "company/add-shift";
     }
 
     @RequestMapping(value = "remove/{companyId}", method = RequestMethod.GET)
@@ -58,4 +67,6 @@ public class CompanyController {
         }
         return "redirect:/company/view/" + companyId;
     }
+
+
 }

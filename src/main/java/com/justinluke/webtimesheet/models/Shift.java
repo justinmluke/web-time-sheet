@@ -2,13 +2,10 @@ package com.justinluke.webtimesheet.models;
 
 
 
-import org.springframework.stereotype.Repository;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -29,6 +26,9 @@ public class Shift {
 
     @ManyToOne
     private Company company;
+
+    @ManyToOne
+    private User user;
 
     @Id
     @GeneratedValue
@@ -70,15 +70,24 @@ public class Shift {
         this.company = company;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Shift(LocalDate date) {
         this.date = date;
     }
 
-    public Shift(LocalDate date, String clockedIn, String clockedOut, Company company) {
+    public Shift(LocalDate date, String clockedIn, String clockedOut, Company company, User user) {
         this.date = date;
         this.clockedIn = clockedIn;
         this.clockedOut = clockedOut;
         this.company = company;
+        this.user = user;
     }
 
     public Shift() {}

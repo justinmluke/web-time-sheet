@@ -2,27 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8"/>
-    <title>Web Time Sheet</title>
+    <title>My Employers</title>
 </head>
 <body>
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<h1>Web Time Sheet</h1>
+<h1> My Employers</h1>
 
-<table th:each="company : ${companies}">
-    <h1 th:text="${company.name}"></h1>
-    <tr>
-        <th>Date</th>
-        <th>Clocked In</th>
-        <th>Clocked Out</th>
-    </tr>
-    <tr th:each="shift : ${company.shifts}">
-        <td th:text="${shift.date}"></td>
-        <td th:text="${shift.clockedIn}"></td>
-        <td th:text="${shift.clockedOut}"></td>
-        <input type="hidden" th:value="${shift.id}"/>
-    </tr>
-</table>
+<h2 th:unless="${companies} and ${companies.size()}"><a th:href="'/add-company/' +${user.uid}"> No Employers. Click here to add! </a></h2>
+
+<ul th:each="company : ${companies}">
+    <a th:href="'/company/view/' +${company.id}"><li th:text="${company.name}"></li></a>
+</ul>
+
 </body>
 </html>

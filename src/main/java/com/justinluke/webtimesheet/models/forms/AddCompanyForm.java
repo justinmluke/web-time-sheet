@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by there on 9/21/2017.
  */
-public class AddEmployerForm {
+public class AddCompanyForm {
 
     private User user;
     private Iterable<Company> companies;
@@ -35,6 +35,10 @@ public class AddEmployerForm {
         this.userId = userId;
     }
 
+    public Iterable<Company> getCompanies() {
+        return companies;
+    }
+
     public int getCompanyId() {
         return companyId;
     }
@@ -43,9 +47,9 @@ public class AddEmployerForm {
         this.companyId = companyId;
     }
 
-    public AddEmployerForm() {}
+    public AddCompanyForm() {}
 
-    public AddEmployerForm(User user, Iterable<Company> companies) {
+    public AddCompanyForm(User user, Iterable<Company> companies) {
         this.user = user;
         this.companies = companies;
     }

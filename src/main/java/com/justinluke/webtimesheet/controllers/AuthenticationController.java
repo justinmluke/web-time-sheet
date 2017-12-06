@@ -1,7 +1,10 @@
 package com.justinluke.webtimesheet.controllers;
 
+import com.justinluke.webtimesheet.models.Company;
 import com.justinluke.webtimesheet.models.User;
+import com.justinluke.webtimesheet.models.data.CompanyDao;
 import com.justinluke.webtimesheet.models.data.UserDao;
+import com.justinluke.webtimesheet.models.forms.AddCompanyForm;
 import com.justinluke.webtimesheet.models.forms.LoginForm;
 import com.justinluke.webtimesheet.models.forms.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -24,10 +28,40 @@ public class AuthenticationController extends AbstractController{
     @Autowired
     private UserDao userDao;
 
-    @RequestMapping(value = "")
-    public String index(Model model){
-        model.addAttribute("companies", userDao.findOne();
+    @Autowired
+    private CompanyDao companyDao;
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String index(Model model, HttpServletRequest request){
+        User user = getUserForModel(request);
+        model.addAttribute("companies", companyDao.findByUser(user));
+        model.addAttribute("user", (user));
         return "user/index";
+    }
+
+    @RequestMapping(value = "add-company/{id}", method = RequestMethod.GET)
+    public String addCompany(@PathVariable int id, Model model) {
+        User user = userDao.findOne(id);
+        model.addAttribute("user", user);
+        AddCompanyForm form = new AddCompanyForm(user, companyDao.findAll());
+        model.addAttribute("form", form);
+        return "user/add-company";
+    }
+
+    @RequestMapping(value = "add-company/{id}", method = RequestMethod.POST)
+    public String addCompany(@PathVariable int id, Model model,
+                             @ModelAttribute @Valid AddCompanyForm form, Errors errors, int companyId) {
+        if (errors.hasErrors()) {
+            return "user/add-company";
+        }
+
+        Company addedCompany = companyDao.findOne(companyId);
+        User editedUser = userDao.findOne(id);
+        editedUser.addCompany(addedCompany);
+        userDao.save(editedUser);
+
+        return "redirect:/";
+
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
