@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Remove Employer</title>
+</head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="POST">
+            <select name="companyId">
+                <option th:each="company : ${user.companies}"
+                        th:value="*{company.id}"
+                        th:text="*{company.name}">
+                </option>
+            </select>
+        <input type="hidden" name="userId" th:value="*{user.uid}" />
+    <input type="submit" value="Remove"/>
+</form>
+</body>
+</html>

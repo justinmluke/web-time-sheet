@@ -16,5 +16,9 @@
     <a th:href="'/company/view/' +${company.id}"><li th:text="${company.name}"></li></a>
 </ul>
 
+<nav>
+    <a th:href="'/remove-company/' +${user.uid}">Remove Employer</a>
+</nav>
+
 </body>
 </html>

@@ -4,11 +4,8 @@ import org.hibernate.validator.constraints.Email;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,16 +32,16 @@ public class User extends AbstractEntity{
         companies.add(company);
     }
 
-    public String getEmail() {
-        return email;
+    public void removeCompany(int companyId) {
+        for (Company company : this.companies) {
+            if (company.getId() == companyId) {
+                this.companies.remove(company);
+            }
+        }
     }
 
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    private List<Shift> shifts = new ArrayList<>();
-
-    public void addShift(Shift shift) {
-        shifts.add(shift);
+    public String getEmail() {
+        return email;
     }
 
     public User() {}

@@ -1,15 +1,16 @@
 package com.justinluke.webtimesheet.controllers;
 
 import com.justinluke.webtimesheet.models.Company;
+import com.justinluke.webtimesheet.models.User;
 import com.justinluke.webtimesheet.models.data.CompanyDao;
-import com.justinluke.webtimesheet.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.validation.Valid;
+import javax.servlet.http.HttpServletRequest;
 
 
 /**
@@ -17,56 +18,19 @@ import javax.validation.Valid;
  */
 @Controller
 @RequestMapping(value = "company")
-public class CompanyController {
+public class CompanyController extends AuthenticationController {
 
     @Autowired
     private CompanyDao companyDao;
 
-    @Autowired
-    private UserDao userDao;
-
-    @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String add(Model model) {
-        model.addAttribute(new Company());
-        return "company/add";
-    }
-
-    @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String add(@ModelAttribute @Valid Company company, Errors errors) {
-        if (errors.hasErrors()){
-            return "company/add";
-        }
-        companyDao.save(company);
-
-        return "redirect:/company/";
-    }
 
     @RequestMapping(value = "view/{companyId}", method = RequestMethod.GET)
-    public String viewCompany(Model model, @PathVariable int companyId){
+    public String displayCompany(Model model, @PathVariable int companyId, HttpServletRequest request){
     Company comp = companyDao.findOne(companyId);
+    User user = getUserForModel(request);
+    model.addAttribute("user", user);
     model.addAttribute("company", comp);
         return "company/view";
     }
-    @RequestMapping(value = "add-shift/{userId}/{companyId}", method = RequestMethod.GET)
-    public String addShift(Model model, @PathVariable int userId, @PathVariable int companyId)    {
-        return "company/add-shift";
-    }
-
-    @RequestMapping(value = "remove/{companyId}", method = RequestMethod.GET)
-    public String displayRemoveShiftForm(Model model, @PathVariable int companyId) {
-        model.addAttribute("company", companyDao.findOne(companyId));
-        return "company/remove";
-    }
-
-    @RequestMapping(value = "remove/{companyId}", method = RequestMethod.POST)
-    public String processRemoveShiftForm(@RequestParam int[] shiftIds, @PathVariable int companyId) {
-        Company comp = companyDao.findOne(companyId);
-        for (int shiftId : shiftIds) {
-            comp.removeShift(shiftId);
-
-        }
-        return "redirect:/company/view/" + companyId;
-    }
-
 
 }

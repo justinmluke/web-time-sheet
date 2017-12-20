@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -40,28 +37,46 @@ public class AuthenticationController extends AbstractController{
     }
 
     @RequestMapping(value = "add-company/{id}", method = RequestMethod.GET)
-    public String addCompany(@PathVariable int id, Model model) {
+    public String displayAddCompany(@PathVariable int id, Model model) {
         User user = userDao.findOne(id);
         model.addAttribute("user", user);
         AddCompanyForm form = new AddCompanyForm(user, companyDao.findAll());
         model.addAttribute("form", form);
+
         return "user/add-company";
     }
 
     @RequestMapping(value = "add-company/{id}", method = RequestMethod.POST)
-    public String addCompany(@PathVariable int id, Model model,
+    public String processAddCompany(@PathVariable int id, Model model,
                              @ModelAttribute @Valid AddCompanyForm form, Errors errors, int companyId) {
         if (errors.hasErrors()) {
             return "user/add-company";
         }
 
         Company addedCompany = companyDao.findOne(companyId);
-        User editedUser = userDao.findOne(id);
-        editedUser.addCompany(addedCompany);
-        userDao.save(editedUser);
+        User theUser = userDao.findOne(id);
+        theUser.addCompany(addedCompany);
+        userDao.save(theUser);
 
         return "redirect:/";
 
+    }
+
+    @RequestMapping(value = "remove-company/{id}", method = RequestMethod.GET)
+    public String displayRemoveCompany(@PathVariable int id, Model model) {
+        User user = userDao.findOne(id);
+        model.addAttribute("user", user);
+
+        return "user/remove-company";
+    }
+
+    @RequestMapping(value = "remove-company/{id}", method = RequestMethod.POST)
+    public String processRemoveCompany(@PathVariable int id, @RequestParam(value = "companyId") int companyId) {
+        User theUser = userDao.findOne(id);
+        theUser.removeCompany(companyId);
+        userDao.save(theUser);
+
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
