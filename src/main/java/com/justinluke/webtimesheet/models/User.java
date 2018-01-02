@@ -32,14 +32,6 @@ public class User extends AbstractEntity{
         companies.add(company);
     }
 
-    public void removeCompany(int companyId) {
-        for (Company company : this.companies) {
-            if (company.getId() == companyId) {
-                this.companies.remove(company);
-            }
-        }
-    }
-
     public String getEmail() {
         return email;
     }

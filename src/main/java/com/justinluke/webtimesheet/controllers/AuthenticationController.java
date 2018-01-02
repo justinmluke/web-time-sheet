@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Created by there on 8/22/2017.
@@ -49,12 +50,21 @@ public class AuthenticationController extends AbstractController{
     @RequestMapping(value = "add-company/{id}", method = RequestMethod.POST)
     public String processAddCompany(@PathVariable int id, Model model,
                              @ModelAttribute @Valid AddCompanyForm form, Errors errors, int companyId) {
-        if (errors.hasErrors()) {
-            return "user/add-company";
-        }
 
         Company addedCompany = companyDao.findOne(companyId);
         User theUser = userDao.findOne(id);
+        List<Company> myCompanies = theUser.getCompanies();
+
+        if (errors.hasErrors()) {
+            return "redirect:/add-company/" + theUser.getUid();
+        }
+
+        if (myCompanies.contains(addedCompany)) {
+            model.addAttribute("error", "You already work for this company. " +
+                    "Please select another employer.");
+            return "redirect:/add-company/" + theUser.getUid();
+        }
+
         theUser.addCompany(addedCompany);
         userDao.save(theUser);
 
@@ -62,18 +72,24 @@ public class AuthenticationController extends AbstractController{
 
     }
 
-    @RequestMapping(value = "remove-company/{id}", method = RequestMethod.GET)
-    public String displayRemoveCompany(@PathVariable int id, Model model) {
-        User user = userDao.findOne(id);
+    @RequestMapping(value = "remove-company/{uid}", method = RequestMethod.GET)
+    public String displayRemoveCompany(@PathVariable int uid, Model model) {
+        User user = userDao.findOne(uid);
         model.addAttribute("user", user);
 
         return "user/remove-company";
     }
 
-    @RequestMapping(value = "remove-company/{id}", method = RequestMethod.POST)
-    public String processRemoveCompany(@PathVariable int id, @RequestParam(value = "companyId") int companyId) {
-        User theUser = userDao.findOne(id);
-        theUser.removeCompany(companyId);
+    @RequestMapping(value = "remove-company/{uid}", method = RequestMethod.POST)
+    public String processRemoveCompany(@PathVariable int uid, @RequestParam(value = "companyId") int id) {
+        User theUser = userDao.findOne(uid);
+        List<Company> myCompanies = theUser.getCompanies();
+        Company theCompany = companyDao.findOne(id);
+
+        if (myCompanies.contains(theCompany)) {
+            myCompanies.remove(theCompany);
+        }
+
         userDao.save(theUser);
 
         return "redirect:/";

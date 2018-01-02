@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
  * Created by there on 9/21/2017.
  */
 public class AddCompanyForm {
-
     private User user;
+
     private Iterable<Company> companies;
 
     @NotNull
