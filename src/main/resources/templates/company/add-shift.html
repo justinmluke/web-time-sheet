@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add Shift</title>
+</head>
+<body>
+<nav th:replace = "fragments :: navigation"></nav>
+<h1>Add Shift</h1>
+
+    <form method="post">
+        <div><label for="shiftDate">Date: </label>
+        <input type="date" id ="shiftDate" name="shiftDate"/>
+        </div>
+        <div><label for="shiftTimeIn">Clocked In: </label>
+            <input type="time" id="shiftTimeIn" name="shiftTimeIn"/>
+        </div>
+        <div><label for="shiftTimeOut">Clocked Out:</label>
+            <input type="time" id="shiftTimeOut" name="shiftTimeOut"/>
+        </div>
+        <div><label for="company">Employer</label>
+        <select id="company" name="companyId">
+            <option th:each="company : ${companies}"
+                    th:value="*{company.id}"
+                    th:text="*{company.name}">
+            </option>
+        </select>
+        </div>
+        <input type="submit"/>
+    </form>
+</body>
+</html>

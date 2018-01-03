@@ -1,11 +1,9 @@
 package com.justinluke.webtimesheet.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +23,10 @@ public class Company {
 
     @ManyToMany(mappedBy = "companies")
     private List<User> user;
+
+    @OneToMany
+    @JoinColumn(name = "company_id")
+    private List<Shift> shifts = new ArrayList<>();
 
     public String getName() {
         return name;

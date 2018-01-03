@@ -3,6 +3,7 @@ package com.justinluke.webtimesheet.controllers;
 import com.justinluke.webtimesheet.models.Company;
 import com.justinluke.webtimesheet.models.User;
 import com.justinluke.webtimesheet.models.data.CompanyDao;
+import com.justinluke.webtimesheet.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 public class CompanyController extends AuthenticationController {
 
     @Autowired
+    private UserDao userDao;
+
+    @Autowired
     private CompanyDao companyDao;
 
 
@@ -33,4 +37,12 @@ public class CompanyController extends AuthenticationController {
         return "company/view";
     }
 
+    @RequestMapping(value = "add-shift/{uid}", method = RequestMethod.GET)
+    public String displayAddShift(Model model, @PathVariable int uid) {
+        User theUser = userDao.findOne(uid);
+        model.addAttribute("companies", companyDao.findByUser(theUser));
+
+        return "company/add-shift";
+    }
+    
 }
