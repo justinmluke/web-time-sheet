@@ -40,6 +40,8 @@ public class Company {
         return id;
     }
 
+    public List<Shift> getShifts() {return shifts;}
+
     public Company() {}
 
     public Company(String name) {

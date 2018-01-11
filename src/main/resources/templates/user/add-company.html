@@ -7,6 +7,10 @@
 <body>
 <nav th:replace="fragments :: navigation"></nav>
 
+<p th:replace="fragments :: username"></p>
+
+<h1>Add Employer</h1>
+
 <form method="POST" th:object="${form}">
     <div class="form-group">
         <select name="companyId">

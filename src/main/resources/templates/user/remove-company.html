@@ -7,6 +7,10 @@
 <body>
 <nav th:replace="fragments :: navigation"></nav>
 
+<p th:replace="fragments :: username"></p>
+
+<h1>Remove Employer</h1>
+
 <form method="POST">
             <select name="companyId">
                 <option th:each="company : ${user.companies}"

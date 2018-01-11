@@ -8,6 +8,8 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
+<p th:replace="fragments :: username"></p>
+
 <h1> My Employers</h1>
 
 <h2 th:unless="${companies} and ${companies.size()}"><a th:href="'/add-company/' +${user.uid}"> No Employers. Click here to add! </a></h2>

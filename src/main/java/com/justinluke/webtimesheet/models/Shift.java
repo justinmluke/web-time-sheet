@@ -28,6 +28,9 @@ public class Shift {
     @ManyToOne
     private Company company;
 
+    @ManyToOne
+    private User user;
+
     public int getId() {
         return id;
     }
@@ -60,6 +63,10 @@ public class Shift {
         return company;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     public void setCompany(Company company) {
         this.company = company;
     }
@@ -67,11 +74,11 @@ public class Shift {
     public Shift() {
     }
 
-    public Shift(int id, String date, String timeIn, String timeOut, Company company) {
-        this.id = id;
+    public Shift(String date, String timeIn, String timeOut, Company company, User user) {
         this.date = date;
         this.timeIn = timeIn;
         this.timeOut = timeOut;
         this.company = company;
+        this.user = user;
     }
 }
