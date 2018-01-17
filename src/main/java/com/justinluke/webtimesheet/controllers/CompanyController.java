@@ -70,6 +70,26 @@ public class CompanyController extends AuthenticationController {
 
         }
 
+    @RequestMapping(value = "remove-shift/{companyId}", method = RequestMethod.GET)
+    public String displayRemoveShift(Model model, @PathVariable int companyId,HttpServletRequest request) {
+        Company comp = companyDao.findOne(companyId);
+        User user = getUserForModel(request);
+        List<Shift> theShifts = user.findShiftsbyCompany(comp);
+        model.addAttribute("company", comp);
+        model.addAttribute("shifts", theShifts);
+
+        return "company/remove-shift";
+    }
+
+    @RequestMapping(value = "remove-shift/{companyId}", method = RequestMethod.POST)
+    public String processRemoveShift(@PathVariable int companyId, @RequestParam(name = "shiftIds") int[] shiftIds) {
+
+        for (int shiftId : shiftIds){
+            shiftDao.delete(shiftId);
+        }
+
+        return "redirect:/company/view/" + companyId;
+    }
 
 }
 

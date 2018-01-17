@@ -2,31 +2,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta charset="UTF-8"/>
-    <title th:text="${company.name}"></title>
+    <title>Remove Shift</title>
     <link th:href="@{/css/webtimesheet.css}" rel="stylesheet" />
-
 </head>
 <body>
-
 <nav th:replace="fragments :: navigation"></nav>
-
-<p th:replace="fragments :: username"></p>
 
 <h1 th:text="${company.name}"></h1>
 
-<table>
+<form method="POST">
+    <table>
         <tr>
             <th>Date</th>
             <th>Clocked In</th>
             <th>Clocked Out</th>
+            <th>Delete?</th>
         </tr>
         <tr th:each="shift : ${shifts}">
             <td th:text="${shift.date}"></td>
             <td th:text="${shift.timeIn}"></td>
             <td th:text="${shift.timeOut}"></td>
+            <td><input type="checkbox" name="shiftIds" th:value="${shift.id}" th:id="${shift.id}"/></td>
         </tr>
-</table>
+    </table>
 
-<a th:href="'/company/remove-shift/' + ${company.id}">Remove Shift</a>
+    <input type="submit" value="Remove"/>
+</form>
 </body>
 </html>
