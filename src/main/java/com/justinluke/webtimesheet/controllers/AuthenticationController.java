@@ -32,6 +32,7 @@ public class AuthenticationController extends AbstractController{
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(Model model, HttpServletRequest request){
         User user = getUserForModel(request);
+        model.addAttribute("title", "My Employers");
         model.addAttribute("companies", companyDao.findByUser(user));
         model.addAttribute("user", (user));
         return "user/index";
@@ -40,6 +41,7 @@ public class AuthenticationController extends AbstractController{
     @RequestMapping(value = "add-company/{id}", method = RequestMethod.GET)
     public String displayAddCompany(@PathVariable int id, Model model) {
         User user = userDao.findOne(id);
+        model.addAttribute("title", "Add Employer");
         model.addAttribute("user", user);
         AddCompanyForm form = new AddCompanyForm(user, companyDao.findAll());
         model.addAttribute("form", form);
@@ -74,6 +76,7 @@ public class AuthenticationController extends AbstractController{
 
     @RequestMapping(value = "remove-company/{uid}", method = RequestMethod.GET)
     public String displayRemoveCompany(@PathVariable int uid, Model model) {
+        model.addAttribute("title", "Remove Employer");
         User user = userDao.findOne(uid);
         model.addAttribute("user", user);
 
@@ -97,6 +100,7 @@ public class AuthenticationController extends AbstractController{
 
     @RequestMapping(value = "submit-company", method = RequestMethod.GET)
     public String displaySubmitCompany(Model model, HttpServletRequest request){
+        model.addAttribute("title", "Submit New Employer");
         User theUser = getUserForModel(request);
         model.addAttribute("user", theUser);
 
@@ -116,8 +120,19 @@ public class AuthenticationController extends AbstractController{
         return "redirect:/add-company/" + userId;
     }
 
+    @RequestMapping(value = "all", method = RequestMethod.GET)
+    public String displayAllShifts(Model model, HttpServletRequest request) {
+        User theUser = getUserForModel(request);
+        Iterable<Company> myCompanies = companyDao.findByUser(theUser);
+        model.addAttribute("title", "My Employers");
+        model.addAttribute("companies", myCompanies);
+
+        return "user/all-shifts";
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String registerForm(Model model) {
+        model.addAttribute("title", "Register");
         model.addAttribute(new RegisterForm());
         return "user/register";
     }
@@ -145,6 +160,7 @@ public class AuthenticationController extends AbstractController{
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
+        model.addAttribute("title", "Login");
         model.addAttribute(new LoginForm());
         return "user/login";
     }

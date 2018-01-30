@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title>Remove Shift</title>
-    <link th:href="@{/css/webtimesheet.css}" rel="stylesheet" />
+<head th:replace="fragments :: head">
 </head>
 <body>
 <nav th:replace="fragments :: navigation"></nav>
@@ -11,7 +8,7 @@
 <h1 th:text="${company.name}"></h1>
 
 <form method="POST">
-    <table>
+    <table class="table">
         <tr>
             <th>Date</th>
             <th>Clocked In</th>

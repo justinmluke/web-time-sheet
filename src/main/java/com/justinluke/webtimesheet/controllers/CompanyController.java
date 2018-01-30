@@ -39,6 +39,7 @@ public class CompanyController extends AuthenticationController {
     public String displayCompany(Model model, @PathVariable int companyId, HttpServletRequest request){
     Company comp = companyDao.findOne(companyId);
     User user = getUserForModel(request);
+    model.addAttribute("title", comp.getName());
     List<Shift> theShifts = user.findShiftsbyCompany(comp);
     model.addAttribute("shifts", theShifts);
     model.addAttribute("company", comp);
@@ -47,6 +48,7 @@ public class CompanyController extends AuthenticationController {
 
     @RequestMapping(value = "add-shift/{uid}", method = RequestMethod.GET)
     public String displayAddShift(Model model, @PathVariable int uid) {
+        model.addAttribute("title", "Add Shift");
         User theUser = userDao.findOne(uid);
         model.addAttribute("companies", companyDao.findByUser(theUser));
 
@@ -72,6 +74,7 @@ public class CompanyController extends AuthenticationController {
 
     @RequestMapping(value = "remove-shift/{companyId}", method = RequestMethod.GET)
     public String displayRemoveShift(Model model, @PathVariable int companyId,HttpServletRequest request) {
+        model.addAttribute("title", "Remove Shift");
         Company comp = companyDao.findOne(companyId);
         User user = getUserForModel(request);
         List<Shift> theShifts = user.findShiftsbyCompany(comp);
