@@ -95,6 +95,27 @@ public class AuthenticationController extends AbstractController{
         return "redirect:/";
     }
 
+    @RequestMapping(value = "submit-company", method = RequestMethod.GET)
+    public String displaySubmitCompany(Model model, HttpServletRequest request){
+        User theUser = getUserForModel(request);
+        model.addAttribute("user", theUser);
+
+        return "user/submit-company";
+    }
+
+    @RequestMapping(value = "submit-company", method = RequestMethod.POST)
+    public String processSubmitCompany(Model model, @RequestParam("companyName") String companyName,
+                                       @RequestParam("userId") int userId){
+        if (companyName == ""){
+            model.addAttribute("error", "Please enter a valid name");
+            return "user/submit-company";
+        }
+
+        Company newCompany = new Company(companyName);
+        companyDao.save(newCompany);
+        return "redirect:/add-company/" + userId;
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String registerForm(Model model) {
         model.addAttribute(new RegisterForm());

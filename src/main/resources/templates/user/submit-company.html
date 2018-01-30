@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Submit New Employer</title>
+</head>
+<body>
+<nav th:replace="fragments :: navigation"></nav>
+
+<p th:replace="fragments :: username"></p>
+
+<h1>Submit New Employer</h1>
+
+<form method="post">
+    <label for="companyName">Employer Name: </label>
+        <input type="text" id="companyName" name="companyName"/>
+        <input type="hidden" th:value="${user.uid}" name="userId"/>
+        <input type="submit"/>
+    <span th:text="${error}"></span>
+</form>
+
+</body>
+</html>
